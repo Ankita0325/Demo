@@ -121,3 +121,80 @@ jobs:
           # Mock a valid-looking 3-part JWT anon key to satisfy client initialization in build phase
           NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
           NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
+
+  audit:
+    name: Dependency Vulnerability Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Dependency Audit Scan
+        run: npm audit --audit-level=high
+
+  e2e:
+    name: Playwright E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E Tests
+        run: npm run test:e2e
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
+
+  lighthouse:
+    name: Lighthouse Performance Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js Production Bundle
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
+
+      - name: Start Server in background
+        run: npm run start &
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
+
+      - name: Wait for server to start
+        run: npx wait-on http://localhost:3000
+
+      - name: Run Lighthouse Audit
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:3000/
+          uploadArtifacts: true
+          temporaryPublicStorage: true

@@ -1,0 +1,55 @@
+name: Auto Assign & Review
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  assign:
+    name: Assign Author & Request Reviewer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto Assign Creator & Reviewer
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const creator = context.payload.sender.login;
+
+            if (context.eventName === 'issues') {
+              // Auto-assign issue to author
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.issue.number,
+                assignees: [creator]
+              });
+              console.log(`Successfully assigned issue #${context.payload.issue.number} to creator ${creator}`);
+            } else if (context.eventName === 'pull_request') {
+              // Auto-assign PR to author
+              await github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                assignees: [creator]
+              });
+              console.log(`Successfully assigned PR #${context.payload.pull_request.number} to creator ${creator}`);
+              
+              // Request review from indresh404 (if creator is not indresh404)
+              if (creator !== 'indresh404') {
+                await github.rest.pulls.requestReviewers({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  reviewers: ['indresh404']
+                });
+                console.log(`Successfully requested review from indresh404 for PR #${context.payload.pull_request.number}`);
+              } else {
+                console.log(`PR author is indresh404; skipped review request to self.`);
+              }
+            }
