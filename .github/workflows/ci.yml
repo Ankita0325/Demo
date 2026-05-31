@@ -119,7 +119,7 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
           # Mock a valid-looking 3-part JWT anon key to satisfy client initialization in build phase
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "mockKeyPart1.mockKeyPart2.mockKeyPart3"
           NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
 
   audit:
@@ -155,7 +155,7 @@ jobs:
         run: npm run test:e2e
         env:
           NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "mockKeyPart1.mockKeyPart2.mockKeyPart3"
           NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
 
   lighthouse:
@@ -178,14 +178,14 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "mockKeyPart1.mockKeyPart2.mockKeyPart3"
           NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
 
       - name: Start Server in background
         run: npm run start &
         env:
           NEXT_PUBLIC_SUPABASE_URL: "https://qzndncraiteaiktdtvkz.supabase.co"
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.SignaturePlaceholder"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "mockKeyPart1.mockKeyPart2.mockKeyPart3"
           NEXT_PUBLIC_GA_ID: "G-CI_CD_MOCK"
 
       - name: Wait for server to start

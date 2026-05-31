@@ -4,7 +4,7 @@ const supabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
 const supabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.signature";
+  "mockKeyPart1.mockKeyPart2.mockKeyPart3";
 
 // Check if Supabase environment variables are real
 export const isSupabaseConfigured = !!(
