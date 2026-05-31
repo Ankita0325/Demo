@@ -111,6 +111,43 @@ Open [http://localhost:3000](http://localhost:3000) to access the landing page.
 
 ---
 
+## 🧪 Testing & Validation
+
+This project has a production-ready validation pipeline to ensure high code quality, security, and performance.
+
+### Verification Scripts
+
+You can run these scripts locally to verify your code before submitting a Pull Request:
+
+- **`npm run lint`** (Code Quality Check)
+  - _What it does:_ Analyzes JavaScript and TypeScript files using ESLint for formatting rules, syntax patterns, and potential logic bugs.
+- **`npm run format:check`** (Style Consistency Check)
+  - _What it does:_ Checks if code files match the Prettier style guidelines. You can automatically fix formatting using `npm run format:write`.
+- **`npm run typecheck`** (Type Safety Check)
+  - _What it does:_ Compiles the TypeScript project (`tsc --noEmit`) to verify that all component props, types, and variables are correctly declared.
+- **`npm run test`** (Unit & Integration Tests)
+  - _What it does:_ Runs unit tests using Vitest and React Testing Library to verify Supabase mock data queries and React component rendering logic.
+- **`npm run test:e2e`** (End-to-End Browser Tests)
+  - _What it does:_ Runs Playwright tests that compile the production app, start the web server in the background, and simulate real browser user flows (e.g. clicking buttons, verifying waitlist form elements).
+- **`npm run build`** (Production Compilation)
+  - _What it does:_ Runs Next.js production build compiler to ensure there are no bundling or routing issues.
+
+### CI/CD Pipeline Checks
+
+When you push code or open a Pull Request, GitHub Actions automatically executes these checks in parallel:
+
+1.  **ESLint Code Quality** (Runs `npm run lint`)
+2.  **Code Formatting (Prettier)** (Runs `npm run format:check`)
+3.  **TypeScript Type Check** (Runs `npm run typecheck`)
+4.  **Vitest Unit Tests** (Runs `npm run test`)
+5.  **Dependency Vulnerability Audit** (Runs `npm audit --audit-level=high` to detect dangerous packages)
+6.  **Playwright E2E Tests** (Runs `npm run test:e2e` in browser container)
+7.  **Lighthouse Performance Audit** (Uses Lighthouse to measure Performance, Accessibility, and SEO scores)
+8.  **GitGuardian Secret Detection** (Uses GitGuardian to prevent accidental leaks of API tokens/keys)
+9.  **Production Bundle Build** (Runs `npm run build`)
+
+---
+
 ## 🔄 Adjusting the Project ID
 
 To test a different venture idea using the same codebase, change the active identifier in `app/page.tsx`:
