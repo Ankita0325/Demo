@@ -14,15 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  ),
   title: "Damusia | Validate Startup Ideas Instantly",
-  description: "Measure real market interest before you build. Damusia helps founders, builders, and teams test product-market fit using analytics and waitlists.",
+  description:
+    "Measure real market interest before you build. Damusia helps founders, builders, and teams test product-market fit using analytics and waitlists.",
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     title: "Damusia | Validate Startup Ideas Instantly",
-    description: "Measure real market interest before you build. Test product-market fit with analytics, feedback loops, and instant waitlists.",
+    description:
+      "Measure real market interest before you build. Test product-market fit with analytics, feedback loops, and instant waitlists.",
     images: [{ url: "/og-image.png" }],
   },
 };
@@ -44,4 +48,3 @@ export default function RootLayout({
     </html>
   );
 }
-

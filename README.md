@@ -8,13 +8,13 @@ It is built with **Next.js 15 (Next.js 16)**, **TypeScript**, **Tailwind CSS**, 
 
 ## 🚀 Interest-Validation Features
 
-* **Single-Page Design**: Mobile-first responsive layout with floating animations, glowing glassmorphic panels, and glowing radial background lights.
-* **Social Proof Counter**: Interactive banner showing live interest counter: `"🔥 428 people already interested"` (querying the database in real-time).
-* **Popup Interest Form**: Centered backdrop-blur modal collecting **Name**, **Phone Number**, **Gender**, and **Date of Birth**.
-* **Database-Driven Duplicate Prevention**: Does **not** write any data to `localStorage`. Instead, when the form is submitted, the backend queries the database directly to check if the `phone` number has already shown interest under `project_id: "damusia"`.
-* **Input Validations**: Enforces minimum name lengths, valid phone number formatting, and logical age/date limits.
-* **Google Analytics**: Performance-optimized deferred GA tag script placeholder.
-* **CI/CD Pipeline**: Pre-configured GitHub Actions pipeline validating compilation and lint quality automatically on pushes.
+- **Single-Page Design**: Mobile-first responsive layout with floating animations, glowing glassmorphic panels, and glowing radial background lights.
+- **Social Proof Counter**: Interactive banner showing live interest counter: `"🔥 428 people already interested"` (querying the database in real-time).
+- **Popup Interest Form**: Centered backdrop-blur modal collecting **Name**, **Phone Number**, **Gender**, and **Date of Birth**.
+- **Database-Driven Duplicate Prevention**: Does **not** write any data to `localStorage`. Instead, when the form is submitted, the backend queries the database directly to check if the `phone` number has already shown interest under `project_id: "damusia"`.
+- **Input Validations**: Enforces minimum name lengths, valid phone number formatting, and logical age/date limits.
+- **Google Analytics**: Performance-optimized deferred GA tag script placeholder.
+- **CI/CD Pipeline**: Pre-configured GitHub Actions pipeline validating compilation and lint quality automatically on pushes.
 
 ---
 
@@ -49,12 +49,15 @@ damusia/
 ## ⚙️ Setup & Installation
 
 ### 1. Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 2. Configure Environment variables
+
 Create a `.env.local` file in the root directory:
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-public-anon-key
@@ -62,7 +65,9 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ```
 
 ### 3. Initialize Supabase Database
+
 Run the following query in your Supabase project's SQL Editor to configure the schema:
+
 ```sql
 -- 1. Create interested_users table
 CREATE TABLE IF NOT EXISTS interested_users (
@@ -97,9 +102,11 @@ CREATE POLICY "Allow public read of interest counts" ON interested_users FOR SEL
 ```
 
 ### 4. Run Development Server
+
 ```bash
 npm run dev
 ```
+
 Open [http://localhost:3000](http://localhost:3000) to access the landing page.
 
 ---

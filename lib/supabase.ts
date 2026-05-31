@@ -1,7 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.signature";
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+const supabaseAnonKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSJ9.signature";
 
 // Check if Supabase environment variables are real
 export const isSupabaseConfigured = !!(
@@ -12,8 +15,13 @@ export const isSupabaseConfigured = !!(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.split(".").length === 3
 );
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-  console.warn("Supabase env missing. Dynamic operations will run in degraded/direct-fail mode.");
+if (
+  !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+  !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+) {
+  console.warn(
+    "Supabase env missing. Dynamic operations will run in degraded/direct-fail mode.",
+  );
 }
 
 // Client initialization. We use eslint-disable-next-line to allow any and prevent schema mismatch compilation crashes
@@ -45,12 +53,13 @@ export interface UserSubmission {
  */
 export async function submitWaitlist(
   data: UserSubmission,
-  projectId: string
+  projectId: string,
 ): Promise<{ success: boolean; error?: string }> {
   if (!isSupabaseConfigured || !supabaseClient) {
-    return { 
-      success: false, 
-      error: "Supabase is not configured. Please set your environment variables." 
+    return {
+      success: false,
+      error:
+        "Supabase is not configured. Please set your environment variables.",
     };
   }
 
@@ -65,29 +74,40 @@ export async function submitWaitlist(
 
     if (checkError) {
       console.error("Supabase check error:", checkError);
-      return { success: false, error: "Database verification failed. Please try again." };
+      return {
+        success: false,
+        error: "Database verification failed. Please try again.",
+      };
     }
 
     if (existingUsers && existingUsers.length > 0) {
-      return { success: false, error: "This phone number has already shown interest." };
+      return {
+        success: false,
+        error: "This phone number has already shown interest.",
+      };
     }
 
     // 2. Perform the insertion
     const { error: insertError } = await supabaseClient
       .from("interested_users")
-      .insert([{
-        project_id: projectId,
-        name: data.name.trim(),
-        phone: data.phone.trim(),
-        gender: data.gender,
-        dob: data.dob,
-      }]);
+      .insert([
+        {
+          project_id: projectId,
+          name: data.name.trim(),
+          phone: data.phone.trim(),
+          gender: data.gender,
+          dob: data.dob,
+        },
+      ]);
 
     if (insertError) {
       console.error("Supabase insertion error:", insertError);
       // Catch duplicate constraint error
       if (insertError.code === "23505") {
-        return { success: false, error: "This phone number has already shown interest." };
+        return {
+          success: false,
+          error: "This phone number has already shown interest.",
+        };
       }
       return { success: false, error: insertError.message };
     }
@@ -95,7 +115,8 @@ export async function submitWaitlist(
     return { success: true };
   } catch (err) {
     console.error("Supabase connection exception:", err);
-    const message = err instanceof Error ? err.message : "Database connection failed";
+    const message =
+      err instanceof Error ? err.message : "Database connection failed";
     return { success: false, error: message };
   }
 }
@@ -106,21 +127,23 @@ export async function submitWaitlist(
 export async function logClick(
   visitorId: string,
   projectId: string,
-  clickedJoin: boolean = true
+  clickedJoin: boolean = true,
 ): Promise<void> {
   if (!isSupabaseConfigured || !supabaseClient) {
-    console.warn(`Click analytics log bypassed (unconfigured db) for: ${projectId}`);
+    console.warn(
+      `Click analytics log bypassed (unconfigured db) for: ${projectId}`,
+    );
     return;
   }
 
   try {
-    await supabaseClient
-      .from("analytics")
-      .insert([{
+    await supabaseClient.from("analytics").insert([
+      {
         project_id: projectId,
         visitor_id: visitorId,
         clicked_join: clickedJoin,
-      }]);
+      },
+    ]);
   } catch (err) {
     console.error("Supabase analytics logging error:", err);
   }
@@ -139,12 +162,15 @@ export async function getInterestCount(projectId: string): Promise<number> {
         .from("interested_users")
         .select("*", { count: "exact", head: true })
         .eq("project_id", projectId);
-      
+
       if (!error && count !== null) {
         dynamicCount = count;
       }
     } catch (err) {
-      console.error(`Error fetching interest count from Supabase for ${projectId}:`, err);
+      console.error(
+        `Error fetching interest count from Supabase for ${projectId}:`,
+        err,
+      );
     }
   }
 

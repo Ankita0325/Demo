@@ -25,8 +25,12 @@ export default function Home() {
   // Initialize in-memory session visitor ID and set theme on mount
   useEffect(() => {
     // Generate temporary in-memory session ID (no localStorage storage)
-    const tempVid = "session_" + Math.random().toString(36).substring(2, 11) + "_" + Date.now();
-    
+    const tempVid =
+      "session_" +
+      Math.random().toString(36).substring(2, 11) +
+      "_" +
+      Date.now();
+
     let savedTheme: "dark" | "light" = "dark";
     if (typeof window !== "undefined") {
       // Default to dark mode but check if user set document class previously (non-persistent)
@@ -43,7 +47,7 @@ export default function Home() {
     refreshCounts();
 
     const interval = setInterval(refreshCounts, 20000);
-    
+
     return () => {
       clearTimeout(timer);
       clearInterval(interval);
@@ -61,7 +65,9 @@ export default function Home() {
   const handleCtaClick = async (ctaLabel: string) => {
     setIsModalOpen(true);
     if (visitorId) {
-      console.log(`Log click: Project=${activeProjectId}, Session=${visitorId}, CTA=${ctaLabel}`);
+      console.log(
+        `Log click: Project=${activeProjectId}, Session=${visitorId}, CTA=${ctaLabel}`,
+      );
       await logClick(visitorId, activeProjectId, true);
     }
   };
@@ -72,11 +78,10 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300 overflow-hidden theme-damusia">
-      
       {/* Background glow orbs that match Damusia color styles */}
       <div className="absolute top-[-25%] left-[-15%] w-[70%] h-[75%] rounded-full radial-glow-primary pointer-events-none z-0" />
       <div className="absolute bottom-[-15%] right-[-15%] w-[60%] h-[75%] rounded-full radial-glow-secondary pointer-events-none z-0" />
-      
+
       {/* Technical Grid Pattern overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--border-light)_1px,transparent_1px),linear-gradient(to_bottom,var(--border-light)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none z-0" />
 
@@ -85,13 +90,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 relative">
-              <Image 
-                src="/logo.png" 
-                alt="Damusia Logo" 
+              <Image
+                src="/logo.png"
+                alt="Damusia Logo"
                 width={36}
                 height={36}
                 style={{ height: "auto" }}
-                className="object-contain rounded-lg" 
+                className="object-contain rounded-lg"
                 priority
               />
             </div>
@@ -108,12 +113,32 @@ export default function Home() {
               aria-label="Toggle theme mode"
             >
               {theme === "dark" ? (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"
+                  />
                 </svg>
               ) : (
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
                 </svg>
               )}
             </button>
@@ -130,10 +155,8 @@ export default function Home() {
 
       {/* Main Content Area */}
       <main className="flex-grow z-10">
-
         {/* 2. Hero Section */}
         <section className="max-w-6xl mx-auto px-6 sm:px-8 pt-20 pb-20 md:pt-28 md:pb-28 text-center relative">
-          
           {/* Announcement Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/20 dark:bg-slate-950/60 light:bg-slate-100 border border-light text-slate-600 dark:text-slate-400 text-xs sm:text-sm font-semibold mb-8 animate-float">
             <span>✨</span>
@@ -150,7 +173,9 @@ export default function Home() {
 
           {/* Subtitle */}
           <p className="text-slate-600 dark:text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-8">
-            Stop wasting months coding features nobody wants. Measure real market interest, log demand analytics, and secure pre-launch indications in minutes.
+            Stop wasting months coding features nobody wants. Measure real
+            market interest, log demand analytics, and secure pre-launch
+            indications in minutes.
           </p>
 
           {/* Social Proof Counter */}
@@ -167,7 +192,7 @@ export default function Home() {
             >
               Get Early Access
             </button>
-            
+
             <button
               onClick={() => handleCtaClick("Hero Secondary Button")}
               className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-card-bg border border-light hover:bg-slate-200 dark:hover:bg-slate-800 text-foreground font-bold text-base transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
@@ -179,15 +204,31 @@ export default function Home() {
           {/* Trust Flags */}
           <div className="mt-14 flex items-center justify-center gap-5 text-[11px] sm:text-xs text-slate-600 dark:text-slate-500">
             <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-[rgb(var(--color-primary))]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <svg
+                className="w-4 h-4 text-[rgb(var(--color-primary))]"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
               </svg>
               <span>Vercel Deploy Ready</span>
             </div>
             <div className="h-4 w-px bg-slate-800" />
             <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-[rgb(var(--color-primary))]" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <svg
+                className="w-4 h-4 text-[rgb(var(--color-primary))]"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
               </svg>
               <span>Supabase Schema Connected</span>
             </div>
@@ -201,24 +242,37 @@ export default function Home() {
               Everything You Need to Launch
             </h2>
             <p className="text-slate-500 max-w-xl mx-auto text-sm">
-              Discover the features making Damusia a game-changing tool for modern startup concepts.
+              Discover the features making Damusia a game-changing tool for
+              modern startup concepts.
             </p>
           </div>
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
             {/* Card 1 */}
             <div className="glass-panel glass-panel-hover p-8 rounded-3xl flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-[rgba(var(--color-primary),0.1)] text-[rgb(var(--color-primary))] flex items-center justify-center mb-6 group-hover:scale-115 transition-transform duration-300">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">Instant Validation</h3>
+                <h3 className="text-xl font-bold text-foreground mb-3">
+                  Instant Validation
+                </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                  Set up high-intent landing pages in minutes. Track clicks and capture demographics directly into a Supabase database.
+                  Set up high-intent landing pages in minutes. Track clicks and
+                  capture demographics directly into a Supabase database.
                 </p>
               </div>
               <div className="mt-8 pt-4">
@@ -236,13 +290,27 @@ export default function Home() {
             <div className="glass-panel glass-panel-hover p-8 rounded-3xl flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-[rgba(var(--color-primary),0.1)] text-[rgb(var(--color-primary))] flex items-center justify-center mb-6 group-hover:scale-115 transition-transform duration-300">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">Deep Demand Analytics</h3>
+                <h3 className="text-xl font-bold text-foreground mb-3">
+                  Deep Demand Analytics
+                </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                  Understand traffic and interest metrics without clunky setups. Log click actions automatically to separate analytics logs for easy query reporting.
+                  Understand traffic and interest metrics without clunky setups.
+                  Log click actions automatically to separate analytics logs for
+                  easy query reporting.
                 </p>
               </div>
               <div className="mt-8 pt-4">
@@ -260,13 +328,27 @@ export default function Home() {
             <div className="glass-panel glass-panel-hover p-8 rounded-3xl flex flex-col justify-between group">
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-[rgba(var(--color-primary),0.1)] text-[rgb(var(--color-primary))] flex items-center justify-center mb-6 group-hover:scale-115 transition-transform duration-300">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-foreground mb-3">Duplicate Protection</h3>
+                <h3 className="text-xl font-bold text-foreground mb-3">
+                  Duplicate Protection
+                </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                  Ensure database integrity with real-time queries. Stop duplicate entries by checking phone numbers directly during form submission.
+                  Ensure database integrity with real-time queries. Stop
+                  duplicate entries by checking phone numbers directly during
+                  form submission.
                 </p>
               </div>
               <div className="mt-8 pt-4">
@@ -279,7 +361,6 @@ export default function Home() {
                 </button>
               </div>
             </div>
-
           </div>
         </section>
       </main>
@@ -290,27 +371,52 @@ export default function Home() {
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 relative">
-                <Image src="/logo.png" alt="Damusia Logo" width={24} height={24} style={{ height: "auto" }} className="object-contain rounded" />
+                <Image
+                  src="/logo.png"
+                  alt="Damusia Logo"
+                  width={24}
+                  height={24}
+                  style={{ height: "auto" }}
+                  className="object-contain rounded"
+                />
               </div>
-              <span className="text-base font-bold text-foreground">{activeProjectName}</span>
+              <span className="text-base font-bold text-foreground">
+                {activeProjectName}
+              </span>
             </div>
             <p className="text-xs text-slate-500">
-              © {new Date().getFullYear()} {activeProjectName}. All rights reserved.
+              © {new Date().getFullYear()} {activeProjectName}. All rights
+              reserved.
             </p>
           </div>
 
           <div className="flex items-center gap-6 text-slate-500 text-xs sm:text-sm">
-            <a href="#github" className="hover:text-foreground transition-colors">GitHub</a>
-            <a href="#twitter" className="hover:text-foreground transition-colors">Twitter / X</a>
-            <a href="#linkedin" className="hover:text-foreground transition-colors">LinkedIn</a>
+            <a
+              href="#github"
+              className="hover:text-foreground transition-colors"
+            >
+              GitHub
+            </a>
+            <a
+              href="#twitter"
+              className="hover:text-foreground transition-colors"
+            >
+              Twitter / X
+            </a>
+            <a
+              href="#linkedin"
+              className="hover:text-foreground transition-colors"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </footer>
 
       {/* The waitlist registration popup modal */}
-      <WaitlistModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <WaitlistModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         onSuccessSubmit={handleSuccessSubmit}
         projectId={activeProjectId}
         projectName={activeProjectName}
